@@ -1,1 +1,1 @@
-# k8s-hello-operator
+# namespace-ripper
