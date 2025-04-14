@@ -18,8 +18,6 @@ package controller
 
 import (
 	"context"
-
-	"fmt"
 	corev1 "github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper/api/v1"
 	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
