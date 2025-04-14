@@ -1,0 +1,6 @@
+apiVersion: hello.example.com/v1
+kind: Hello
+metadata:
+  name: rajesh
+spec:
+  name: Rajesh
