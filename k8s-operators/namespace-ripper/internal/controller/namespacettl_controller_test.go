@@ -27,10 +27,10 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	hellov1 "github.com/rajeshdeshpande02/k8s-hello-operator/api/v1"
+	corev1 "github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper/api/v1"
 )
 
-var _ = Describe("Hello Controller", func() {
+var _ = Describe("NamespaceTTL Controller", func() {
 	Context("When reconciling a resource", func() {
 		const resourceName = "test-resource"
 
@@ -40,13 +40,13 @@ var _ = Describe("Hello Controller", func() {
 			Name:      resourceName,
 			Namespace: "default", // TODO(user):Modify as needed
 		}
-		hello := &hellov1.Hello{}
+		namespacettl := &corev1.NamespaceTTL{}
 
 		BeforeEach(func() {
-			By("creating the custom resource for the Kind Hello")
-			err := k8sClient.Get(ctx, typeNamespacedName, hello)
+			By("creating the custom resource for the Kind NamespaceTTL")
+			err := k8sClient.Get(ctx, typeNamespacedName, namespacettl)
 			if err != nil && errors.IsNotFound(err) {
-				resource := &hellov1.Hello{
+				resource := &corev1.NamespaceTTL{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      resourceName,
 						Namespace: "default",
@@ -59,16 +59,16 @@ var _ = Describe("Hello Controller", func() {
 
 		AfterEach(func() {
 			// TODO(user): Cleanup logic after each test, like removing the resource instance.
-			resource := &hellov1.Hello{}
+			resource := &corev1.NamespaceTTL{}
 			err := k8sClient.Get(ctx, typeNamespacedName, resource)
 			Expect(err).NotTo(HaveOccurred())
 
-			By("Cleanup the specific resource instance Hello")
+			By("Cleanup the specific resource instance NamespaceTTL")
 			Expect(k8sClient.Delete(ctx, resource)).To(Succeed())
 		})
 		It("should successfully reconcile the resource", func() {
 			By("Reconciling the created resource")
-			controllerReconciler := &HelloReconciler{
+			controllerReconciler := &NamespaceTTLReconciler{
 				Client: k8sClient,
 				Scheme: k8sClient.Scheme(),
 			}

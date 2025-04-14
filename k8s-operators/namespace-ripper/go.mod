@@ -1,4 +1,4 @@
-module github.com/rajeshdeshpande02/k8s-hello-operator
+module github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper
 
 go 1.22.0
 

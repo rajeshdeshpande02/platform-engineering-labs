@@ -24,10 +24,10 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"github.com/rajeshdeshpande02/k8s-hello-operator/test/utils"
+	"github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper/test/utils"
 )
 
-const namespace = "k8s-hello-operator-system"
+const namespace = "namespace-ripper-system"
 
 var _ = Describe("controller", Ordered, func() {
 	BeforeAll(func() {
@@ -60,7 +60,7 @@ var _ = Describe("controller", Ordered, func() {
 			var err error
 
 			// projectimage stores the name of the image used in the example
-			var projectimage = "example.com/k8s-hello-operator:v0.0.1"
+			var projectimage = "example.com/namespace-ripper:v0.0.1"
 
 			By("building the manager(Operator) image")
 			cmd := exec.Command("make", "docker-build", fmt.Sprintf("IMG=%s", projectimage))

@@ -1,27 +1,23 @@
-# permissions for end users to edit hellos.
+# permissions for end users to view namespacettls.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   labels:
-    app.kubernetes.io/name: k8s-hello-operator
+    app.kubernetes.io/name: namespace-ripper
     app.kubernetes.io/managed-by: kustomize
-  name: hello-editor-role
+  name: namespacettl-viewer-role
 rules:
 - apiGroups:
-  - hello.example.com
+  - core.pelabs.com
   resources:
-  - hellos
+  - namespacettls
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
-  - hello.example.com
+  - core.pelabs.com
   resources:
-  - hellos/status
+  - namespacettls/status
   verbs:
   - get

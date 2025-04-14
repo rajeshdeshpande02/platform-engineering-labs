@@ -1,1 +1,1 @@
-/workspaces/k8s-hello-operator/bin/kustomize-v5.4.3
+/workspaces/k8s-hello-operator/k8s-operators/namespace-ripper/bin/kustomize-v5.4.3

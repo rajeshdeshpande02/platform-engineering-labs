@@ -2,22 +2,22 @@
 # This file is used to track the info used to scaffold your project
 # and allow the plugins properly work.
 # More info: https://book.kubebuilder.io/reference/project-config.html
-domain: example.com
+domain: pelabs.com
 layout:
 - go.kubebuilder.io/v4
 plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
-projectName: k8s-hello-operator
-repo: github.com/rajeshdeshpande02/k8s-hello-operator
+projectName: namespace-ripper
+repo: github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper
 resources:
 - api:
     crdVersion: v1
     namespaced: true
   controller: true
-  domain: example.com
-  group: hello
-  kind: Hello
-  path: github.com/rajeshdeshpande02/k8s-hello-operator/api/v1
+  domain: pelabs.com
+  group: core
+  kind: NamespaceTTL
+  path: github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper/api/v1
   version: v1
 version: "3"

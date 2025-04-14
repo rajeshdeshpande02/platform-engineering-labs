@@ -1,8 +1,11 @@
----
+# permissions for end users to edit namespacettls.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: manager-role
+  labels:
+    app.kubernetes.io/name: namespace-ripper
+    app.kubernetes.io/managed-by: kustomize
+  name: namespacettl-editor-role
 rules:
 - apiGroups:
   - core.pelabs.com
@@ -19,14 +22,6 @@ rules:
 - apiGroups:
   - core.pelabs.com
   resources:
-  - namespacettls/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - core.pelabs.com
-  resources:
   - namespacettls/status
   verbs:
   - get
-  - patch
-  - update

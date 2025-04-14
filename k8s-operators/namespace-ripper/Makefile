@@ -28,8 +28,8 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 # This variable is used to construct full image tags for bundle and catalog images.
 #
 # For example, running 'make bundle-build bundle-push catalog-build catalog-push' will build and push both
-# example.com/k8s-hello-operator-bundle:$VERSION and example.com/k8s-hello-operator-catalog:$VERSION.
-IMAGE_TAG_BASE ?= example.com/k8s-hello-operator
+# pelabs.com/namespace-ripper-bundle:$VERSION and pelabs.com/namespace-ripper-catalog:$VERSION.
+IMAGE_TAG_BASE ?= pelabs.com/namespace-ripper
 
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
@@ -159,10 +159,10 @@ PLATFORMS ?= linux/arm64,linux/amd64,linux/s390x,linux/ppc64le
 docker-buildx: ## Build and push docker image for the manager for cross-platform support
 	# copy existing Dockerfile and insert --platform=${BUILDPLATFORM} into Dockerfile.cross, and preserve the original Dockerfile
 	sed -e '1 s/\(^FROM\)/FROM --platform=\$$\{BUILDPLATFORM\}/; t' -e ' 1,// s//FROM --platform=\$$\{BUILDPLATFORM\}/' Dockerfile > Dockerfile.cross
-	- $(CONTAINER_TOOL) buildx create --name k8s-hello-operator-builder
-	$(CONTAINER_TOOL) buildx use k8s-hello-operator-builder
+	- $(CONTAINER_TOOL) buildx create --name namespace-ripper-builder
+	$(CONTAINER_TOOL) buildx use namespace-ripper-builder
 	- $(CONTAINER_TOOL) buildx build --push --platform=$(PLATFORMS) --tag ${IMG} -f Dockerfile.cross .
-	- $(CONTAINER_TOOL) buildx rm k8s-hello-operator-builder
+	- $(CONTAINER_TOOL) buildx rm namespace-ripper-builder
 	rm Dockerfile.cross
 
 .PHONY: build-installer

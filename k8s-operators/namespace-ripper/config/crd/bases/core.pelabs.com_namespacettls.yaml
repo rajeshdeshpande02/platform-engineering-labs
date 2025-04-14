@@ -4,20 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.16.1
-  name: hellos.hello.example.com
+  name: namespacettls.core.pelabs.com
 spec:
-  group: hello.example.com
+  group: core.pelabs.com
   names:
-    kind: Hello
-    listKind: HelloList
-    plural: hellos
-    singular: hello
+    kind: NamespaceTTL
+    listKind: NamespaceTTLList
+    plural: namespacettls
+    singular: namespacettl
   scope: Namespaced
   versions:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: Hello is the Schema for the hellos API
+        description: NamespaceTTL is the Schema for the namespacettls API
         properties:
           apiVersion:
             description: |-
@@ -37,15 +37,15 @@ spec:
           metadata:
             type: object
           spec:
-            description: HelloSpec defines the desired state of Hello
+            description: NamespaceTTLSpec defines the desired state of NamespaceTTL
             properties:
-              name:
+              ttl:
+                description: Foo is an example field of NamespaceTTL. Edit namespacettl_types.go
+                  to remove/update
                 type: string
-            required:
-            - name
             type: object
           status:
-            description: HelloStatus defines the observed state of Hello
+            description: NamespaceTTLStatus defines the observed state of NamespaceTTL
             type: object
         type: object
     served: true

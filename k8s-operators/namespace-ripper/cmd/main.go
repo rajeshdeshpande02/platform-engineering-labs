@@ -35,8 +35,8 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	hellov1 "github.com/rajeshdeshpande02/k8s-hello-operator/api/v1"
-	"github.com/rajeshdeshpande02/k8s-hello-operator/internal/controller"
+	corev1 "github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper/api/v1"
+	"github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/namespace-ripper/internal/controller"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -48,7 +48,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(hellov1.AddToScheme(scheme))
+	utilruntime.Must(corev1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
 }
 
@@ -126,7 +126,7 @@ func main() {
 		WebhookServer:          webhookServer,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "9ddf020a.example.com",
+		LeaderElectionID:       "9266c1be.pelabs.com",
 		// LeaderElectionReleaseOnCancel defines if the leader should step down voluntarily
 		// when the Manager ends. This requires the binary to immediately end when the
 		// Manager is stopped, otherwise, this setting is unsafe. Setting this significantly
@@ -144,11 +144,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.HelloReconciler{
+	if err = (&controller.NamespaceTTLReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Hello")
+		setupLog.Error(err, "unable to create controller", "controller", "NamespaceTTL")
 		os.Exit(1)
 	}
 	// +kubebuilder:scaffold:builder
