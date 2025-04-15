@@ -7,3 +7,6 @@ metadata:
   name: namespacettl-sample
 spec:
   ttl: 30s
+  #exceptions:
+  #  - "test"
+  #  - "test2"

@@ -1,8 +1,34 @@
 # namespace-ripper
-// TODO(user): Add simple overview of use/purpose
+ This operator, manages the lifecycle of namespaces based on a
+ time-to-live (TTL) value specified in the NamespaceTTL custom resource.
+
+ It performs the following steps:
+ 1. Fetches the NamespaceTTL instance specified in the request.
+ ```
+ apiVersion: core.pelabs.com/v1
+kind: NamespaceTTL
+metadata:
+  labels:
+    app.kubernetes.io/name: namespace-ripper
+    app.kubernetes.io/managed-by: kustomize
+  name: namespacettl-sample
+spec:
+  ttl: 30s
+  exceptions:
+    - "test"
+    - "test2"
+
+ ```
+ 2. Parses the TTL value from the NamespaceTTL spec.
+ 3. Lists all namespaces in the cluster.
+ 4. Deletes namespaces that have existed longer than the specified TTL,
+    excluding protected namespaces and any additional exceptions specified
+    in the NamespaceTTL spec.
+ 5. Requeues the reconciliation after 15 seconds to ensure periodic cleanup.
+
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+ TODO(user): An in-depth paragraph about your project and overview of use
 
 ## Getting Started
 
@@ -86,15 +112,15 @@ its dependencies.
 Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project, i.e.:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/<org>/namespace-ripper/<tag or branch>/dist/install.yaml
+kubectl apply -f https:raw.githubusercontent.com/<org>/namespace-ripper/<tag or branch>/dist/install.yaml
 ```
 
 ## Contributing
-// TODO(user): Add detailed information on how you would like others to contribute to this project
+ TODO(user): Add detailed information on how you would like others to contribute to this project
 
 **NOTE:** Run `make help` for more information on all potential `make` targets
 
-More information can be found via the [Kubebuilder Documentation](https://book.kubebuilder.io/introduction.html)
+More information can be found via the [Kubebuilder Documentation](https:book.kubebuilder.io/introduction.html)
 
 ## License
 
@@ -104,7 +130,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    http:www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,

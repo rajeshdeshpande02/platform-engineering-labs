@@ -57,7 +57,7 @@ func (r *NamespaceTTLReconciler) Reconcile(ctx context.Context, req ctrl.Request
 		return ctrl.Result{}, client.IgnoreNotFound(err)
 	}
 
-	// Access the spec field (for example TTL or AdditionalField)
+	// Access the spec field (for example TTL )
 	ttlDuration, err := time.ParseDuration(namespaceTTL.Spec.TTL)
 	if err != nil {
 		log.Error(err, "Invalid TTL format")
@@ -71,6 +71,10 @@ func (r *NamespaceTTLReconciler) Reconcile(ctx context.Context, req ctrl.Request
 		return ctrl.Result{}, err
 	}
 	protectedNamespace := []string{"kube-system", "kube-public", "kube-node-lease", "namespace-ripper-system", "default"}
+	if namespaceTTL.Spec.Exceptions != nil {
+		protectedNamespace = append(protectedNamespace, namespaceTTL.Spec.Exceptions...)
+	}
+
 	for _, ns := range namespaceList.Items {
 
 		currentTime := time.Now()

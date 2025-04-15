@@ -39,6 +39,10 @@ spec:
           spec:
             description: NamespaceTTLSpec defines the desired state of NamespaceTTL
             properties:
+              exceptions:
+                items:
+                  type: string
+                type: array
               ttl:
                 description: Foo is an example field of NamespaceTTL. Edit namespacettl_types.go
                   to remove/update

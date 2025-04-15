@@ -29,7 +29,8 @@ type NamespaceTTLSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of NamespaceTTL. Edit namespacettl_types.go to remove/update
-	TTL string `json:"ttl,omitempty"`
+	TTL        string   `json:"ttl,omitempty"`
+	Exceptions []string `json:"exceptions,omitempty"`
 }
 
 // NamespaceTTLStatus defines the observed state of NamespaceTTL
