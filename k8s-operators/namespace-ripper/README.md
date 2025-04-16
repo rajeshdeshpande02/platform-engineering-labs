@@ -1,4 +1,7 @@
 # namespace-ripper
+
+**A Kubernetes Operator for Time-To-Live (TTL) based Namespace Cleanup.**
+ 
  This operator, manages the lifecycle of namespaces based on a
  time-to-live (TTL) value specified in the NamespaceTTL custom resource.
 
@@ -27,8 +30,66 @@ spec:
  5. Requeues the reconciliation after 15 seconds to ensure periodic cleanup.
 
 
-## Description
- TODO(user): An in-depth paragraph about your project and overview of use
+## Benefits of 'namespace-ripper' Operator
+
+🧹 1. Automated Cleanup of Stale Namespaces
+- Avoids accumulation of old namespaces created for testing, staging, or CI/CD pipelines.
+
+- Saves cluster resources and improves overall hygiene.
+
+- Reduces manual cleanup tasks for DevOps/Platform teams.
+
+🔐 2. Controlled Exception Mechanism
+- You’ve smartly added an exceptions field in the CRD.
+
+- Ensures critical namespaces (test, dev, platform, etc.) are never deleted accidentally.
+
+- This supports Zero Trust principles by reducing the blast radius of misconfigurations.
+
+⏱️ 3. TTL-Based Lifecycle Management
+- Enforces namespace lifespan policies (like ttl=30s, ttl=1h, etc.).
+
+- Useful in sandbox environments or preview deployments where namespaces should auto-expire.
+
+- Can be integrated into GitOps workflows, where TTL is defined declaratively.
+
+🧩 4. Custom Resource Driven
+- Everything is managed via a single, declarative NamespaceTTL CR.
+
+- Easy for platform teams to onboard this into existing Kustomize/Helm/ArgoCD setups.
+
+- Simple to audit or replicate across clusters.
+
+🧠 5. Fully Kubernetes-Native & Golang-Based
+- No external dependencies — runs as a Kubernetes operator.
+
+- Native reconciliation loop ensures consistency and reliability.
+
+- Easy to extend for more features (like dry-run, label selectors, or notifications).
+
+## 🏢 Business Value of `namespace-ripper` Operator
+
+| 💼 Area                  | 🌟 Value                                                                 |
+|--------------------------|---------------------------------------------------------------------------|
+| **Developer Experience** | Developers can create test namespaces without worrying about cleanup.     |
+| **Platform Engineering** | Enforces automated TTL policies, reducing manual toil and human error.    |
+| **Security & Compliance**| Prevents namespace sprawl and reduces risk of shadow resources.           |
+| **Cost Optimization**    | Deletes unused namespaces and workloads, saving cluster resources.        |
+| **SRE/Operations**       | Improves cluster hygiene and supports lifecycle management practices.     |
+
+## Roadmap
+
+Add dry-run mode (spec.dryRun: true) to preview deletions.
+
+Add label/annotation-based filtering to target specific namespaces.
+
+Send Slack or webhook notifications before deletion.
+
+Track deletions in a CR status field (status.deletedNamespaces).
+
+Expose Prometheus metrics for number of namespaces deleted or skipped.
+
+Webhook for CR validation to enforce minimum TTL.
 
 ## Getting Started
 
@@ -115,26 +176,5 @@ Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project
 kubectl apply -f https:raw.githubusercontent.com/<org>/namespace-ripper/<tag or branch>/dist/install.yaml
 ```
 
-## Contributing
- TODO(user): Add detailed information on how you would like others to contribute to this project
 
-**NOTE:** Run `make help` for more information on all potential `make` targets
-
-More information can be found via the [Kubebuilder Documentation](https:book.kubebuilder.io/introduction.html)
-
-## License
-
-Copyright 2025.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http:www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
 
