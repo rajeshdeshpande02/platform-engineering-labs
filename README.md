@@ -1,7 +1,9 @@
 # Platform Engineering Labs
-**Platform Engineering Labs** is a collection of Kubernetes operators, automation scripts, admission controllers, and other cloud-native tools created to enhance platform engineering, scalability, and operational efficiency. This repository contains a variety of tools designed to simplify and automate tasks in Kubernetes and platform engineering.
+**Platform Engineering Labs** is my hands-on playground where I experiment with and automate tasks related to Kubernetes Operators, Admission Controllers, and DevOps workflows. 
 
-**Created and maintained by Rajesh Deshpande.**
+This monorepo is where I get my hands dirty with building real-world tools to improve operational efficiency, scalability, and security within Kubernetes clusters. By developing these components, I aim to address common challenges in platform engineering—automating repetitive tasks, optimizing workflows, and ensuring smoother deployment pipelines. 
+
+It’s not just about writing code; it’s about creating scalable, repeatable, and reliable systems that drive the core principles of Platform Engineering: automation, integration, and developer experience. Through this, I continuously sharpen my skills while contributing to building the foundational tools that power modern cloud-native platforms.
 
 ## Contents
 **Kubernetes Operators:** Custom controllers designed to automate various tasks in the Kubernetes ecosystem.
