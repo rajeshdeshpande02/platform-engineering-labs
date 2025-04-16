@@ -91,7 +91,33 @@ Expose Prometheus metrics for number of namespaces deleted or skipped.
 
 Webhook for CR validation to enforce minimum TTL.
 
-## Getting Started
+## How to use this operator
+
+**Install the complete operator into the cluster:**
+
+```sh
+kubectl apply -f https://raw.githubusercontent.com/rajeshdeshpande02/platform-engineering-labs/refs/heads/main/k8s-operators/namespace-ripper/operator-install.yaml
+```
+**Deploy Custom Resource `NamespaceTTL`**
+
+```sh
+apiVersion: core.pelabs.com/v1
+kind: NamespaceTTL
+metadata:
+ labels:
+   app.kubernetes.io/name: namespace-ripper
+   app.kubernetes.io/managed-by: kustomize
+ name: namespacettl-sample
+spec:
+ # Delete namespaces which are created before 5h
+ ttl: 5h
+ # Namespace which should not be deleted
+ exceptions:
+   - "test"
+   - "test2"
+```
+
+## Developer Corner
 
 ### Prerequisites
 - go version v1.22.0+
@@ -153,28 +179,8 @@ make uninstall
 make undeploy
 ```
 
-## Project Distribution
 
-Following are the steps to build the installer and distribute this project to users.
 
-1. Build the installer for the image built and published in the registry:
-
-```sh
-make build-installer IMG=<some-registry>/namespace-ripper:tag
-```
-
-NOTE: The makefile target mentioned above generates an 'install.yaml'
-file in the dist directory. This file contains all the resources built
-with Kustomize, which are necessary to install this project without
-its dependencies.
-
-2. Using the installer
-
-Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project, i.e.:
-
-```sh
-kubectl apply -f https:raw.githubusercontent.com/<org>/namespace-ripper/<tag or branch>/dist/install.yaml
-```
 
 
 
