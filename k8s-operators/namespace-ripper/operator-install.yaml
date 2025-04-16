@@ -270,7 +270,7 @@ spec:
         - --health-probe-bind-address=:8081
         command:
         - /manager
-        image: controller:latest
+        image: rajeshd2090/namespace-ripper:1.0
         livenessProbe:
           httpGet:
             path: /healthz
