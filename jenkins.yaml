@@ -1,0 +1,261 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - usernamePassword:
+          id: "github-creds"
+          password: "{AQAAABAAAAAwyqiW370dY7uJXwUWK8xOIf08iMOhKg8oE9m1wvUilricdU9r/dhxGTz6cK1ukpTe7au0/qd2w+3EQpZXU13lxg==}"
+          scope: GLOBAL
+          username: "rajeshd2090"
+      - usernamePassword:
+          id: "dev-svc-github"
+          password: "{AQAAABAAAAAwoJbFtX3DXVEL7q4YapDmSitCvnaAvx8BaFHskVfI1CiMOrftzY+x7B1s1rnTXQAmVG0IKLdoQsW5+cAlWcsOaQ==}"
+          scope: GLOBAL
+          username: "sunandad2090"
+      - string:
+          id: "sonarcloud-cred"
+          scope: GLOBAL
+          secret: "{AQAAABAAAAAwLPEjYaXnxFuMh+9csyA4CvlnBKV+obCcbWj4IS17V31HuYvR/VbOCv+LrQ9jyCuTWrktoDFk890TKYKKBwhISA==}"
+      - usernamePassword:
+          id: "dockerhub"
+          password: "{AQAAABAAAAAQEMdy1ODig/7BVOA0p6Rb48PiBxByBstVSbCByRopLGw=}"
+          scope: GLOBAL
+          username: "rajeshd2090"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  clouds:
+  - kubernetes:
+      containerCap: 10
+      containerCapStr: "10"
+      jenkinsTunnel: "jenkins-agent.default.svc.cluster.local:50000"
+      jenkinsUrl: "http://jenkins.default.svc.cluster.local:8080"
+      name: "kubernetes"
+      namespace: "jenkins"
+      podLabels:
+      - key: "jenkins/jenkins-jenkins-agent"
+        value: "true"
+      serverUrl: "https://kubernetes.default"
+      templates:
+      - containers:
+        - args: "^${computer.jnlpmac} ^${computer.name}"
+          envVars:
+          - envVar:
+              key: "JENKINS_URL"
+              value: "http://jenkins.jenkins.svc.cluster.local:8080/"
+          image: "jenkins/inbound-agent:3256.v88a_f6e922152-1"
+          name: "jnlp"
+          resourceLimitCpu: "512m"
+          resourceLimitMemory: "512Mi"
+          resourceRequestCpu: "512m"
+          resourceRequestMemory: "512Mi"
+          workingDir: "/home/jenkins/agent"
+        id: "0d5a95e08e797d3a303b79c83dd245409a7fbc9ed3bf2f8c94667dcb0f0a26c3"
+        label: "jenkins-jenkins-agent"
+        name: "default"
+        namespace: "jenkins"
+        nodeUsageMode: "NORMAL"
+        podRetention: "never"
+        serviceAccount: "default"
+        slaveConnectTimeout: 100
+        slaveConnectTimeoutStr: "100"
+        yamlMergeStrategy: "override"
+      - containers:
+        - args: "cat"
+          command: "/bin/sh -c"
+          image: "maven:latest"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "maven"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
+        - command: "cat"
+          image: "docker:latest"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "docker"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
+        - args: "\"sleep 99d\""
+          command: "/bin/sh -c"
+          image: "bitnami/kubectl:latest"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "kubectl"
+          ttyEnabled: true
+          workingDir: "/home/jenkins/agent"
+        id: "784f3cbd-dfe6-4428-bf68-d4d0c10fcadb"
+        label: "jenkins-maven"
+        name: "jenkins-maven"
+        namespace: "default"
+        runAsUser: "0"
+        volumes:
+        - hostPathVolume:
+            hostPath: "/var/run/docker.sock"
+            mountPath: "/var/run/docker.sock"
+            readOnly: false
+        yamlMergeStrategy: "override"
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+  disableRememberMe: false
+  disabledAdministrativeMonitors:
+  - "hudson.util.DoubleLaunchChecker"
+  labelAtoms:
+  - name: "built-in"
+  - name: "jenkins-jenkins-agent"
+  - name: "jenkins-maven"
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  nodeMonitors:
+  - "architecture"
+  - "clock"
+  - diskSpace:
+      freeSpaceThreshold: "1GiB"
+      freeSpaceWarningThreshold: "2GiB"
+  - "swapSpace"
+  - tmpSpace:
+      freeSpaceThreshold: "1GiB"
+      freeSpaceWarningThreshold: "2GiB"
+  - "responseTime"
+  numExecutors: 0
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin"
+        name: "Jenkins Admin"
+        properties:
+        - "apiToken"
+        - "consoleUrlProvider"
+        - "mailer"
+        - "myView"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - "experimentalFlags"
+  slaveAgentPort: 50000
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      jobNames:
+      - "project-one"
+      name: "ICNDP"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      name: "OneDev"
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      name: "Temasek"
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+globalCredentialsConfiguration:
+  configuration:
+    providerFilter: "none"
+    typeFilter: "none"
+appearance:
+  prism:
+    theme: PRISM
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  gitHooks:
+    allowedOnAgents: false
+    allowedOnController: false
+  gitHostKeyVerificationConfiguration:
+    sshHostKeyVerificationStrategy: "knownHostsFileVerificationStrategy"
+unclassified:
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+  fingerprints:
+    fingerprintCleanupDisabled: false
+    storage: "file"
+  location:
+    adminAddress: "address not configured yet <nobody@nowhere>"
+    url: "http://jenkins:8080/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+    useTls: false
+  pollSCM:
+    pollingThreadCount: 10
+  scmGit:
+    addGitTagAction: false
+    allowSecondFetch: false
+    createAccountBasedOnEmail: false
+    disableGitToolChooser: false
+    hideCredentials: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  sonarGlobalConfiguration:
+    buildWrapperEnabled: false
+    installations:
+    - credentialsId: "sonarcloud-cred"
+      name: "sonarcloudScanner"
+      serverUrl: "https://sonarcloud.io"
+      triggers:
+        skipScmCause: false
+        skipUpstreamCause: false
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"
