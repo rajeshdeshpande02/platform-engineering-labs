@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: hello-webhook-config
+webhooks:
+  - name: hello.webhook.k8s.io
+    rules:
+      - apiGroups: ["*"]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+        scope: "Namespaced"
+    clientConfig:
+      service:
+        name: hello-webhook
+        namespace: default
+        path: /validate
+        port: 443
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkVENDQVJ1Z0F3SUJBZ0lRUERVOFA4VS9Wdkh4cFUvcDlCWmdXREFLQmdncWhrak9QUVFEQWpBUE1RMHcKQ3dZRFZRUUtFd1J1YVd3eE1DQVhEVEkxTURReU16QXhNak0xTTFvWUR6SXhNalV3TXpNd01ERXlNelV6V2pBUApNUTB3Q3dZRFZRUUtFd1J1YVd3eE1Ga3dFd1lIS29aSXpqMENBUVlJS29aSXpqMERBUWNEUWdBRUNZYXpjaWRGCmRQZVpCWXRlN3VLVE9PV0RQVWVyRS9kOWh0eUNWVHVLNS9GWC8wNEtuYzJQN1BnM2gxalZIOXBGZi9lNGJ5MGgKWDduWGg4TlJndlB2OHFOWE1GVXdEZ1lEVlIwUEFRSC9CQVFEQWdJRU1CTUdBMVVkSlFRTU1Bb0dDQ3NHQVFVRgpCd01CTUE4R0ExVWRFd0VCL3dRRk1BTUJBZjh3SFFZRFZSME9CQllFRks0aHFqTk9hT2NuaERuMzVyeTNFV1JZClh3R3NNQW9HQ0NxR1NNNDlCQU1DQTBnQU1FVUNJQm9CV3J2cWlRc21iekZZUkFhMGVwQVIzR1g0Wk51ZlJsNUoKaHJaQjd5QUlBaUVBdTRjYU14dkF6VTY3OHRFNm1lNW1Pd1F2bS85eWVMYXNyNlFsWGRvSVBadz0KLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
