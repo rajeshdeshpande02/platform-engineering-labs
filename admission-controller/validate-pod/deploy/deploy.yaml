@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validate-pod-webhook
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: validate-pod-webhook
+  template:
+    metadata:
+      labels:
+        app: validate-pod-webhook
+    spec:
+      containers:
+        - name: webhook
+          image: rajeshd2090/validate-pod:1.2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8443
+          volumeMounts:
+            - name: tls-certs
+              mountPath: /tls
+              readOnly: true
+         # args:
+         #   - "--tls-cert-file=/tls/tls.crt"
+         #   - "--tls-private-key=/tls/tls.key"
+      volumes:
+        - name: tls-certs
+          secret:
+            secretName: validate-pod-webhook-tls

@@ -1,0 +1,21 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validate-pod-webhook-config
+webhooks:
+  - name: validate-pod.webhook.k8s.io
+    rules:
+      - apiGroups: ["*"]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+        scope: "Namespaced"
+    clientConfig:
+      service:
+        name: validate-pod-webhook
+        namespace: default
+        path: /validate
+        port: 443
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUJkakNDQVJ5Z0F3SUJBZ0lSQVBHVEJMSDN2c0lKTWV4Tnlwc24vSVl3Q2dZSUtvWkl6ajBFQXdJd0R6RU4KTUFzR0ExVUVDaE1FYm1sc01UQWdGdzB5TlRBME1qUXlNelEzTkRsYUdBOHlNVEkxTURNek1USXpORGMwT1ZvdwpEekVOTUFzR0ExVUVDaE1FYm1sc01UQlpNQk1HQnlxR1NNNDlBZ0VHQ0NxR1NNNDlBd0VIQTBJQUJMTS95VUh1CmE4U1dCUE1obHRjRk0zTVBZVno3c2ZJSUllSUF4MHdBL1ExbktiNkY4MXZENkZLTXNNUU9MZ2ZiRU5MdGZJeFMKbGp5alBMTVFOZlRRSURxalZ6QlZNQTRHQTFVZER3RUIvd1FFQXdJQ0JEQVRCZ05WSFNVRUREQUtCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUMWhaMVBkOWVsZzRiVTZ5UGx4V0VPCk1ITmEvREFLQmdncWhrak9QUVFEQWdOSUFEQkZBaUVBbmVIRnlJRkEvWmRRRjQrYWxmRWV0eGFwMUVKdWdkc0oKendXOWNkenhabFVDSUZhdFpKYnl4M3dONXVvelZYelMxaUk1S1U0cjdyVVl6SkZySWJ1OVQ1UWkKLS0tLS1FTkQgQ0VSVElGSUNBVEUtLS0tLQo=
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
