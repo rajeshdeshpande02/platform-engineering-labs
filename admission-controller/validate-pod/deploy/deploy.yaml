@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: webhook
-          image: rajeshd2090/validate-pod:1.2
+          image: rajeshd2090/validate-pod:1.5
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8443

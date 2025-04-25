@@ -26,14 +26,17 @@ func handleValidate(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "could not decode admission review", http.StatusBadRequest)
 		return
 	}
+
 	if admissionReview.Request.Kind.Kind == "Pod" {
 		fmt.Println("Received a Pod admission request")
 		var pod map[string]interface{}
 		if err := json.Unmarshal(admissionReview.Request.Object.Raw, &pod); err == nil {}
+		   
 			metadata := pod["metadata"].(map[string]interface{})
 			if ownerRefs, ok := metadata["ownerReferences"]; !ok || len(ownerRefs.([]interface{})) == 0 {
 				allowed = false
 				resultMsg = "Denied: Creating naked pods directly is not allowed"
+				fmt.Println(resultMsg, "for Pod", metadata["name"])
 			} }
 	// Send response back to Kubernetes
 	admissionReview.Response = &admissionv1.AdmissionResponse{
