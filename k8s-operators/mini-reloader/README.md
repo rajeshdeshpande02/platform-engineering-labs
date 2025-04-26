@@ -1,10 +1,58 @@
 # mini-reloader
-// TODO(user): Add simple overview of use/purpose
 
-## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+**Mini Reloader** is a lightweight Kubernetes operator that automatically restarts deployments when their referenced ConfigMaps or Secrets change.
 
-## Getting Started
+It ensures your application pods always reflect the latest configuration without manual intervention or GitOps hacks.
+
+## Features
+ 
+- Event-based ConfigMap/Secret watching
+
+- Auto restarts Deployments referencing changed ConfigMaps or Secrets
+
+- Written using Operator SDK and controller-runtime
+
+- No need for custom resources (CRDs)
+
+- Can run with minimal RBAC (only needs access to watch & patch Deployments and ConfigMaps)
+
+## How It Works
+
+1. Watches ConfigMaps and Secrets with label `mini-reloader.pelabs/enabled = true` in the cluster.
+
+2. On change, it:
+    - Lists all Deployments in the same namespace.
+
+    - Checks if any of them reference the updated ConfigMap or Secret (via volume or envFrom).
+
+    - If match found, patches the Deployment with a new label like:
+
+        ````yaml
+            metadata:
+              labels:
+                restartedAt: <current-time>
+        ````
+      
+    - This triggers a rolling update automatically.
+
+
+## Future Improvements
+
+- Support StatefulSets and DaemonSets
+
+- Add support for projected volumes
+
+- Validate integrity using hashes instead of annotations
+
+- Expose Prometheus metrics (e.g., restarts triggered)
+
+- Optional dry-run mode for GitOps-safe environments
+
+- Multi-namespace or cluster-scoped support
+
+- Send alerts when restarts are triggered
+
+
 
 ### Prerequisites
 - go version v1.22.0+
