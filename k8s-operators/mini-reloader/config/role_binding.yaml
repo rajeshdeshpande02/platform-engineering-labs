@@ -1,15 +1,15 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+kind: ClusterRoleBinding
 metadata:
   labels:
     app.kubernetes.io/name: mini-reloader
     app.kubernetes.io/managed-by: kustomize
-  name: leader-election-rolebinding
+  name: mini-reloader-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: leader-election-role
+  kind: ClusterRole
+  name: cluster-admin 
 subjects:
 - kind: ServiceAccount
-  name: controller-manager
-  namespace: system
+  name: mini-reloader
+  namespace: mini-reloader

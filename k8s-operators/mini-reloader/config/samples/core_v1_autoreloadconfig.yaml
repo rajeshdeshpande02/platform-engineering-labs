@@ -1,9 +1,0 @@
-apiVersion: core.pelabs.com/v1
-kind: AutoReloadConfig
-metadata:
-  labels:
-    app.kubernetes.io/name: mini-reloader
-    app.kubernetes.io/managed-by: kustomize
-  name: autoreloadconfig-sample
-spec:
-  # TODO(user): Add fields here

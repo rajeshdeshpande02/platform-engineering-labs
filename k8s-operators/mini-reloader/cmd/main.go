@@ -35,7 +35,6 @@ import (
 	metricsserver "sigs.k8s.io/controller-runtime/pkg/metrics/server"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 
-	corev1 "github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/mini-reloade/api/v1"
 	"github.com/rajeshdeshpande02/platform-engineering-labs/k8s-operators/mini-reloade/internal/controller"
 	// +kubebuilder:scaffold:imports
 )
@@ -48,7 +47,7 @@ var (
 func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
-	utilruntime.Must(corev1.AddToScheme(scheme))
+	//utilruntime.Must(corev1.AddToScheme(scheme))
 	// +kubebuilder:scaffold:scheme
 }
 
