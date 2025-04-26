@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  key1: config1
+  key2: config6
+kind: ConfigMap
+metadata:
+  labels:
+    mini-reloader.pelabs/enabled: "true"
+  name: my-config
+  namespace: default
