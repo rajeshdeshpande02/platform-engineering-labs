@@ -9,10 +9,11 @@ Run following command:
 ````sh
  $ go run create_branch.go --repo-name=rajeshdeshpande02/test-repo  --base-branch develop --new-branch test
 
-```
+````
 
 Pre-requisite:
 
 ````sh
 export GHUB_TOKEN = "<Github token with appropriate access>"
+
 ````
