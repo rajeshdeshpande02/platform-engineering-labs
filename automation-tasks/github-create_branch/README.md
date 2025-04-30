@@ -4,16 +4,28 @@ This automation helps to create a github branch from a specific branch. This can
 
 ## How to execute it?
 
-Run following command:
-
-````sh
- $ go run create_branch.go --repo-name=rajeshdeshpande02/test-repo  --base-branch develop --new-branch test
-
-````
-
 Pre-requisite:
 
 ````sh
 export GHUB_TOKEN = "<Github token with appropriate access>"
 
 ````
+
+### CLI Access:
+
+````sh
+$ go run cli_main.go  --repo-name rajeshdeshpande02/test-repo --base-branch main --new-branch test1
+
+````
+### REST API Access:
+
+````sh
+curl --location 'https://expert-guacamole-9j5ppg5j7qrc7v5p-8080.app.github.dev/create-branch' \
+--header 'Content-Type: application/json' \
+--data '{
+    "repo-name": "rajeshdeshpande02/test-repo",
+    "base-branch": "main",
+    "new-branch": "rest-test"
+}'
+````
+
