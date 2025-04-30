@@ -19,6 +19,13 @@ $ go run cli_main.go  --repo-name rajeshdeshpande02/test-repo --base-branch main
 ````
 ### REST API Access:
 
+Start Server:
+````sh
+go run rest_main.go
+
+````
+
+Send Request:
 ````sh
 curl --location 'https://expert-guacamole-9j5ppg5j7qrc7v5p-8080.app.github.dev/create-branch' \
 --header 'Content-Type: application/json' \
