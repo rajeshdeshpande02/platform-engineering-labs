@@ -20,6 +20,7 @@ func CreateRepoFromTempl(template string, repo_name string) error {
 
 	ghub_token := os.Getenv("GHUB_TOKEN")
 	if ghub_token == "" {
+		log.Println("Error: GHUB_TOKEN not set")
 		return errors.New("GHUB_TOKEN not set")
 	}
 
@@ -39,12 +40,14 @@ func CreateRepoFromTempl(template string, repo_name string) error {
 
 	repoJson, err := json.Marshal(repodDetails)
 	if err != nil {
+		log.Println("Error marshalling repo details: ", err)
 		return fmt.Errorf("error marshalling repo details: %w", err)
 
 	}
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(repoJson))
 	if err != nil {
+		log.Println("Error creating request: ", err)
 		return fmt.Errorf("error creating request: %w", err)
 	}
 
@@ -56,10 +59,12 @@ func CreateRepoFromTempl(template string, repo_name string) error {
 	resp, err := httpClient.Do(req)
 
 	if err != nil {
+		log.Println("Error sending request: ", err)
 		return fmt.Errorf("error sending request: %w", err)
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusCreated {
+		log.Println("Error creating repository: ", resp)
 		return fmt.Errorf("error creating repository: %s", resp.Status)
 	}
 	log.Println("Repository created successfully")
